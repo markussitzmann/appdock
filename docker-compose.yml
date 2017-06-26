@@ -1,0 +1,71 @@
+version: '3'
+
+services:
+
+  base:
+     environment:
+      - TUG_GID
+      - TUG_UID
+      - TUG_HOME
+      - BUILD_LABEL
+     build:
+       context: base/
+     image: markussitzmann/appdockbase:${BUILD_LABEL}
+     networks:
+      - rope
+#     volumes:
+#      - "${TUG_HOME}:/home/tug"
+#
+#  shell:
+#    environment:
+#      - TUG_GID
+#      - TUG_UID
+#      - TUG_HOME
+#    build:
+#       context: shell/
+#    depends_on:
+#      - "keel"
+#    #command: bash
+#    #stdin_open: true
+#    #tty: true
+#    volumes:
+#      - "${TUG_HOME}:/home/tug"
+#    image: markussitzmann/shell:1
+#    networks:
+#      - rope
+
+
+  db:
+    container_name: appdockdb
+    environment:
+      - BUILD_LABEL
+      - DEBUG=false
+
+      - DB_USER=
+      - DB_PASS=
+      - DB_NAME=
+      - DB_TEMPLATE=
+
+      - DB_EXTENSION=
+
+      - REPLICATION_MODE=
+      - REPLICATION_USER=
+      - REPLICATION_PASS=
+      - REPLICATION_SSLMODE=
+    build:
+      context: https://github.com/markussitzmann/docker-postgresql.git#apptug
+      args:
+        build_label: ${BUILD_LABEL}
+    image: markussitzmann/postgres:${BUILD_LABEL}
+    volumes:
+       - /srv/docker/appdockdb:/var/lib/postgresql
+    depends_on:
+       - "base"
+    networks:
+       - "rope"
+
+networks:
+  rope:
+
+
+
