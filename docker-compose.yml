@@ -10,7 +10,7 @@ services:
       - BUILD_LABEL
      build:
        context: base/
-     image: markussitzmann/appdockbase:${BUILD_LABEL}
+     image: markussitzmann/appdock_base:${BUILD_LABEL}
      networks:
       - rope
 #     volumes:
@@ -36,7 +36,6 @@ services:
 
 
   db:
-    container_name: appdockdb
     environment:
       - BUILD_LABEL
       - DEBUG=false
@@ -53,10 +52,10 @@ services:
       - REPLICATION_PASS=
       - REPLICATION_SSLMODE=
     build:
-      context: https://github.com/markussitzmann/docker-postgresql.git#apptug
+      context: https://github.com/markussitzmann/docker-postgresql.git#appdock
       args:
         build_label: ${BUILD_LABEL}
-    image: markussitzmann/postgres:${BUILD_LABEL}
+    image: markussitzmann/appdock_db:${BUILD_LABEL}
     volumes:
        - /srv/docker/appdockdb:/var/lib/postgresql
     depends_on:
