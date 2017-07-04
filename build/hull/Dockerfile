@@ -1,12 +1,8 @@
-FROM debian:stretch
-MAINTAINER markus.sitzmann@gmail.com
+FROM markussitzmann/appdock_base:20170701
+MAINTAINER markussitzmann@gmail.com
+ARG BUILD_LABEL
 
-RUN apt-get update && apt-get -y --no-install-recommends install \
-    ca-certificates \
-    curl wget gosu sudo \
-    gnupg \
-    unzip tar bzip2 \
-    postgresql-client \
+RUN apt-get -y --no-install-recommends install \
     build-essential \
     libglib2.0-0 \
     libxext6 \
@@ -28,6 +24,3 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     libxslt1-dev
 
 
-COPY entrypoint.sh /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]

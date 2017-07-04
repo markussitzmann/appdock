@@ -2,13 +2,44 @@ version: '3'
 
 services:
 
-  base:
-    image: markussitzmann/appdock_base:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_base
+#  base:
+#    image: markussitzmann/appdock_base:${APPDOCK_BUILD_LABEL}
+#    container_name: appdock_base
+#    build:
+#      context: base/
+#    networks:
+#      - rope
+#    volumes:
+#      - "${APPDOCK_HOME}:/home/appdock"
+#    environment:
+#      - APPDOCK_BUILD_LABEL
+#      - APPDOCK_HOME
+#      - APPDOCK_USER
+#      - APPDOCK_UID
+#      - APPDOCK_GID
+
+  proxy:
+    image: markussitzmann/appdock_proxy:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_proxy
     build:
-      context: base/
+      context: https://github.com/markussitzmann/nginx-proxy.git#appdock
+      #args:
+      #  build_label: ${APPDOCK_BUILD_LABEL}
     networks:
-      - rope
+      - "rope"
+
+#  hull:
+#    image: markussitzmann/appdock_hull:${APPDOCK_BUILD_LABEL}
+#    container_name: appdock_hull
+#    build:
+#      context: hull/
+#    depends_on:
+#      - "base"
+
+  prototype:
+    image: markussitzmann/appdock_prototype_conda_django:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_prototype2
+    command: bash
     volumes:
       - "${APPDOCK_HOME}:/home/appdock"
     environment:
@@ -21,13 +52,9 @@ services:
   shell:
     image: markussitzmann/appdock_shell:${APPDOCK_BUILD_LABEL}
     container_name: appdock_shell
-    build:
-       context: shell/
-    depends_on:
-      - "base"
+    #depends_on:
+    #  - "base"
     command: bash
-    stdin_open: true
-    tty: true
     volumes:
       - "${APPDOCK_HOME}:/home/appdock"
     networks:
@@ -44,12 +71,12 @@ services:
     container_name: appdock_db
     build:
       context: https://github.com/markussitzmann/docker-postgresql.git#appdock
-      args:
-        build_label: ${APPDOCK_BUILD_LABEL}
+      #args:
+      #  build_label: ${APPDOCK_BUILD_LABEL}
     volumes:
        - /srv/docker/appdockdb:/var/lib/postgresql
-    depends_on:
-       - "base"
+    #depends_on:
+    #   - "base"
     networks:
        - "rope"
     environment:
