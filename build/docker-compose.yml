@@ -11,12 +11,12 @@ services:
       - rope
     volumes:
       - "${APPDOCK_HOME}:/home/appdock"
-    environment:
-      - APPDOCK_BUILD_LABEL
-      - APPDOCK_HOME
-      - APPDOCK_USER
-      - APPDOCK_UID
-      - APPDOCK_GID
+    #environment:
+    #  - APPDOCK_BUILD_LABEL
+    #  - APPDOCK_HOME
+    #  - APPDOCK_USER
+    #  - APPDOCK_UID
+    #  - APPDOCK_GID
 
   proxy:
     image: markussitzmann/appdock_proxy:${APPDOCK_BUILD_LABEL}
@@ -36,22 +36,32 @@ services:
     depends_on:
       - "base"
 
-  prototype:
-    image: markussitzmann/appdock_prototype_conda_django:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_prototype
+  python-conda:
+    image: markussitzmann/appdock_python_conda:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_python_conda
     build:
-      context: prototype/
+      context: python-conda/
     depends_on:
       - "hull"
-    command: bash
     volumes:
       - "${APPDOCK_HOME}:/home/appdock"
-    environment:
-      - APPDOCK_BUILD_LABEL
-      - APPDOCK_HOME
-      - APPDOCK_USER
-      - APPDOCK_UID
-      - APPDOCK_GID
+    #environment:
+    #  - APPDOCK_BUILD_LABEL
+    #  - APPDOCK_HOME
+    #  - APPDOCK_USER
+    #  - APPDOCK_UID
+    #  - APPDOCK_GID
+
+  rdkit:
+    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_rdkit
+    build:
+      context: rdkit/compile
+    depends_on:
+      - "python-conda"
+    volumes:
+      - "${APPDOCK_HOME}:/home/appdock"
+
 
   shell:
     image: markussitzmann/appdock_shell:${APPDOCK_BUILD_LABEL}
@@ -65,12 +75,12 @@ services:
       - "${APPDOCK_HOME}:/home/appdock"
     networks:
       - "rope"
-    environment:
-      - APPDOCK_BUILD_LABEL
-      - APPDOCK_HOME
-      - APPDOCK_USER
-      - APPDOCK_UID
-      - APPDOCK_GID
+    #environment:
+    #  - APPDOCK_BUILD_LABEL
+    #  - APPDOCK_HOME
+    #  - APPDOCK_USER
+    #  - APPDOCK_UID
+    #  - APPDOCK_GID
 
   db:
     image: markussitzmann/appdock_db:${APPDOCK_BUILD_LABEL}
@@ -85,26 +95,26 @@ services:
        - "base"
     networks:
        - "rope"
-    environment:
-      - DEBUG=false
+    #environment:
+    #  - DEBUG=false
 
-      - APPDOCK_BUILD_LABEL
-      - APPDOCK_HOME
-      - APPDOCK_USER
-      - APPDOCK_UID
-      - APPDOCK_GID
+#      - APPDOCK_BUILD_LABEL
+#      - APPDOCK_HOME
+#      - APPDOCK_USER
+#      - APPDOCK_UID
+#      - APPDOCK_GID
 
-      - DB_USER=${APPDOCK_USER}
-      - DB_PASS=${APPDOCK_DB_PASSWORD}
-      - DB_NAME=${APPDOCK_USER}
-      - DB_TEMPLATE=
+#      - DB_USER=${APPDOCK_USER}
+#      - DB_PASS=${APPDOCK_DB_PASSWORD}
+#      - DB_NAME=${APPDOCK_USER}
+#      - DB_TEMPLATE=
 
-      - DB_EXTENSION=
+#      - DB_EXTENSION=
 
-      - REPLICATION_MODE=
-      - REPLICATION_USER=
-      - REPLICATION_PASS=
-      - REPLICATION_SSLMODE=
+#      - REPLICATION_MODE=
+#      - REPLICATION_USER=
+#      - REPLICATION_PASS=
+#      - REPLICATION_SSLMODE=
 
 networks:
   rope:

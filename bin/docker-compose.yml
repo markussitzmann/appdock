@@ -36,9 +36,22 @@ services:
 #    depends_on:
 #      - "base"
 
-  prototype:
-    image: markussitzmann/appdock_prototype_conda_django:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_prototype2
+  python-conda:
+    image: markussitzmann/appdock_python_conda:${APPDOCK_BUILD_LABEL}
+    container_name: python-conda
+    command: bash
+    volumes:
+      - "${APPDOCK_HOME}:/home/appdock"
+    environment:
+      - APPDOCK_BUILD_LABEL
+      - APPDOCK_HOME
+      - APPDOCK_USER
+      - APPDOCK_UID
+      - APPDOCK_GID
+
+  rdkit:
+    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
+    container_name: rdkit
     command: bash
     volumes:
       - "${APPDOCK_HOME}:/home/appdock"

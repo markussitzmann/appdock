@@ -10,6 +10,7 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
 ENV PATH /opt/conda/bin:$PATH
 
 RUN conda update conda --yes && \
+    conda config --add channels rdkit && \
     conda install jinja2 conda-build --yes && \
     conda install anaconda-client --yes && \
     conda install patchelf --yes && \
@@ -22,9 +23,8 @@ ENV LANG C.UTF-8
 # explicitly set user/group IDs
 #RUN groupadd -r appserver --gid=1000 && useradd -r -g appserver --uid=1000 appserver
 
-COPY requirements.txt /requirements.txt
-COPY entrypoint.sh /entrypoint.sh
-#COPY run.sh /
+COPY requirements.txt /
+COPY docker-entrypoint.sh /
 
 #RUN conda install --use-local --yes --quiet python rdkit
 RUN CONDA_PY=35 pip install -r /requirements.txt
@@ -34,7 +34,7 @@ RUN CONDA_PY=35 pip install -r /requirements.txt
 #    chown -R appserver.appserver /opt/conda
 #USER appserver
 
-#ENTRYPOINT ["/entrypoint.sh"]
-CMD ["/bin/bash"]
+#ENTRYPOINT ["/docker-entrypoint.sh"]
+#CMD ["/bin/bash"]
 
 
