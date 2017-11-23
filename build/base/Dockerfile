@@ -7,8 +7,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     gnupg \
     unzip tar bzip2 \
     git \
-    postgresql-client \
-    libssl-dev
+    postgresql-client
 
 COPY docker-entrypoint.sh /
 
