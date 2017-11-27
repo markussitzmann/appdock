@@ -24,7 +24,7 @@ go into directory::
 
 and edit the file ``.env`` to appropriate settings, in particular, variable ``APPDOCK_HOME`` to a file directory location where the user
 running the build in the next is allowed to create a directory. If the directory specified in ``APPDOCK_HOME`` does not exist, it will be
-created during start up of the Docker container. It will be mounted as volume in all containers.
+created during the first start up of a Docker container. It will be mounted as volume in all containers.
 
 Start the Docker build of the system by::
 
@@ -33,4 +33,27 @@ Start the Docker build of the system by::
 which will build all Docker image files for the APPDOCK.
 
 
+Some (already working) things
+-----------------------------
 
+================
+Starting a shell
+================
+
+with::
+
+    docker-compose run --rm shell
+
+If this is the first start-up of the shell container, the directory specified in ``APPDOCK_HOME`` will be created and mounted as a Docker volume.
+Inside the shell container, this directory is available under ``/home/appdock``.
+
+
+===============================
+Starting a database client psql
+===============================
+
+with::
+
+    docker-compose run --rm shell psql -h db -U appdock appdock
+
+Password is the one specified ``APPDOCK_DB_PASSWORD`` in ``.env``.
