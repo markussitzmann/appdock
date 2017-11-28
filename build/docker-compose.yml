@@ -28,30 +28,34 @@ services:
 #    networks:
 #      - "rope"
 #
-#  hull:
-#    image: markussitzmann/appdock_hull:${APPDOCK_BUILD_LABEL}
-#    container_name: appdock_hull
-#    build:
-#      context: hull/
-#    depends_on:
-#      - "base"
-#
-#  python-conda:
-#    image: markussitzmann/appdock_python_conda:${APPDOCK_BUILD_LABEL}
-#    container_name: appdock_python_conda
-#    build:
-#      context: python-conda/
-#    depends_on:
-#      - "hull"
-#    volumes:
-#      - "${APPDOCK_HOME}:/home/appdock"
-#    #environment:
-#    #  - APPDOCK_BUILD_LABEL
-#    #  - APPDOCK_HOME
-#    #  - APPDOCK_USER
-#    #  - APPDOCK_UID
-#    #  - APPDOCK_GID
-#
+  core:
+    image: markussitzmann/appdock_core:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_core
+    build:
+      context: core/
+      args:
+        build_label: ${APPDOCK_BUILD_LABEL}
+    depends_on:
+      - base
+
+  python:
+    image: markussitzmann/appdock_python:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_python
+    build:
+      context: python/
+      args:
+        build_label: ${APPDOCK_BUILD_LABEL}
+    depends_on:
+      - core
+    #volumes:
+    #  - "${APPDOCK_HOME}:/home/appdock"
+    #environment:
+    #  - APPDOCK_BUILD_LABEL
+    #  - APPDOCK_HOME
+    #  - APPDOCK_USER
+    #  - APPDOCK_UID
+    #  - APPDOCK_GID
+
 #  rdkit:
 #    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
 #    container_name: appdock_rdkit
@@ -73,16 +77,10 @@ services:
     depends_on:
       - base
     command: bash
-    volumes:
-      - "${APPDOCK_HOME}:/home/appdock"
+    #volumes:
+    #  - "${APPDOCK_HOME}:/home/appdock"
     networks:
       - rope
-    #environment:
-    #  - APPDOCK_BUILD_LABEL
-    #  - APPDOCK_HOME
-    #  - APPDOCK_USER
-    #  - APPDOCK_UID
-    #  - APPDOCK_GID
 
   db:
     image: markussitzmann/appdock_db:${APPDOCK_BUILD_LABEL}
@@ -91,32 +89,12 @@ services:
       context: https://github.com/markussitzmann/docker-postgresql.git#appdock
       args:
         build_label: ${APPDOCK_BUILD_LABEL}
-    volumes:
-       - /srv/docker/appdockdb:/var/lib/postgresql
+    #volumes:
+    #   - /srv/docker/appdockdb:/var/lib/postgresql
     depends_on:
        - base
     networks:
        - rope
-    #environment:
-    #  - DEBUG=false
-
-#      - APPDOCK_BUILD_LABEL
-#      - APPDOCK_HOME
-#      - APPDOCK_USER
-#      - APPDOCK_UID
-#      - APPDOCK_GID
-
-#      - DB_USER=${APPDOCK_USER}
-#      - DB_PASS=${APPDOCK_DB_PASSWORD}
-#      - DB_NAME=${APPDOCK_USER}
-#      - DB_TEMPLATE=
-
-#      - DB_EXTENSION=
-
-#      - REPLICATION_MODE=
-#      - REPLICATION_USER=
-#      - REPLICATION_PASS=
-#      - REPLICATION_SSLMODE=
 
 networks:
   rope:

@@ -1,4 +1,5 @@
-FROM markussitzmann/appdock_hull:20170701
+ARG build_label
+FROM markussitzmann/appdock_core:$build_label
 MAINTAINER markussitzmann@gmail.com
 ARG BUILD_LABEL
 
@@ -14,7 +15,7 @@ RUN conda update conda --yes && \
     conda install jinja2 conda-build --yes && \
     conda install anaconda-client --yes && \
     conda install patchelf --yes && \
-    conda install python=3.5 --yes
+    conda install python=3.6.1 --yes
 
 # http://bugs.python.org/issue19846
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
@@ -27,7 +28,7 @@ COPY requirements.txt /
 COPY docker-entrypoint.sh /
 
 #RUN conda install --use-local --yes --quiet python rdkit
-RUN CONDA_PY=35 pip install -r /requirements.txt
+RUN CONDA_PY=36 pip install -r /requirements.txt
 
 #RUN mkdir -p /opt/appserver && \
 #    chown -R appserver.appserver /opt/appserver && \
