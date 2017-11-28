@@ -91,7 +91,7 @@ services:
     #depends_on:
     #   - "base"
     networks:
-       - "rope"
+      - rope
     environment:
       - DEBUG=false
 

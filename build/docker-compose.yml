@@ -71,12 +71,12 @@ services:
       args:
         build_label: ${APPDOCK_BUILD_LABEL}
     depends_on:
-      - "base"
+      - base
     command: bash
     volumes:
       - "${APPDOCK_HOME}:/home/appdock"
     networks:
-      - "rope"
+      - rope
     #environment:
     #  - APPDOCK_BUILD_LABEL
     #  - APPDOCK_HOME
@@ -94,9 +94,9 @@ services:
     volumes:
        - /srv/docker/appdockdb:/var/lib/postgresql
     depends_on:
-       - "base"
+       - base
     networks:
-       - "rope"
+       - rope
     #environment:
     #  - DEBUG=false
 
