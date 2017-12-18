@@ -21,6 +21,7 @@ RUN apt-get -y --no-install-recommends install \
     libtiff5-dev \
     libjpeg62-turbo-dev \
     libxml2-dev \
-    libxslt1-dev
-
+    libxslt1-dev \
+    patch \
+    cmake
 

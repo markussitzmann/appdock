@@ -36,19 +36,19 @@ services:
 #    depends_on:
 #      - "base"
 
-#  python-conda:
-#    image: markussitzmann/appdock_python_conda:${APPDOCK_BUILD_LABEL}
-#    container_name: python-conda
-#    command: bash
-#    volumes:
-#      - "${APPDOCK_HOME}:/home/appdock"
-#    environment:
-#      - APPDOCK_BUILD_LABEL
-#      - APPDOCK_HOME
-#      - APPDOCK_USER
-#      - APPDOCK_UID
-#      - APPDOCK_GID
-#
+  app:
+    image: markussitzmann/appdock_app:${APPDOCK_BUILD_LABEL}
+    container_name: app
+    command: bash
+    volumes:
+      - "${APPDOCK_HOME}:/home/appdock"
+    environment:
+      - APPDOCK_BUILD_LABEL
+      - APPDOCK_HOME
+      - APPDOCK_USER
+      - APPDOCK_UID
+      - APPDOCK_GID
+
 #  rdkit:
 #    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
 #    container_name: rdkit
@@ -65,13 +65,11 @@ services:
   shell:
     image: markussitzmann/appdock_shell:${APPDOCK_BUILD_LABEL}
     container_name: appdock_shell
-    #depends_on:
-    #  - "base"
     command: bash
     volumes:
       - "${APPDOCK_HOME}:/home/appdock"
     networks:
-      - "rope"
+      - rope
     environment:
       - APPDOCK_BUILD_LABEL
       - APPDOCK_HOME
@@ -84,12 +82,8 @@ services:
     container_name: appdock_db
     build:
       context: https://github.com/markussitzmann/docker-postgresql.git#appdock
-      #args:
-      #  build_label: ${APPDOCK_BUILD_LABEL}
     volumes:
        - /srv/docker/appdockdb:/var/lib/postgresql
-    #depends_on:
-    #   - "base"
     networks:
       - rope
     environment:

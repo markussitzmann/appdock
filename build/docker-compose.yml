@@ -11,12 +11,6 @@ services:
       - rope
     volumes:
       - "${APPDOCK_HOME}:/home/appdock"
-    #environment:
-    #  - APPDOCK_BUILD_LABEL
-    #  - APPDOCK_HOME
-    #  - APPDOCK_USER
-    #  - APPDOCK_UID
-    #  - APPDOCK_GID
 #
 #  proxy:
 #    image: markussitzmann/appdock_proxy:${APPDOCK_BUILD_LABEL}
@@ -47,26 +41,27 @@ services:
         build_label: ${APPDOCK_BUILD_LABEL}
     depends_on:
       - core
-    #volumes:
-    #  - "${APPDOCK_HOME}:/home/appdock"
-    #environment:
-    #  - APPDOCK_BUILD_LABEL
-    #  - APPDOCK_HOME
-    #  - APPDOCK_USER
-    #  - APPDOCK_UID
-    #  - APPDOCK_GID
 
-#  rdkit:
-#    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
-#    container_name: appdock_rdkit
-#    build:
-#      context: rdkit/compile
-#    depends_on:
-#      - "python-conda"
-#    volumes:
-#      - "${APPDOCK_HOME}:/home/appdock"
-#
-#
+  rdkit:
+    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_rdkit
+    build:
+      context: rdkit/compile
+      args:
+        build_label: ${APPDOCK_BUILD_LABEL}
+    depends_on:
+      - python
+
+  app:
+    image: markussitzmann/appdock_app:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_app
+    build:
+      context: app/
+      args:
+        build_label: ${APPDOCK_BUILD_LABEL}
+    depends_on:
+      - rdkit
+
   shell:
     image: markussitzmann/appdock_shell:${APPDOCK_BUILD_LABEL}
     container_name: appdock_shell
@@ -75,12 +70,8 @@ services:
       args:
         build_label: ${APPDOCK_BUILD_LABEL}
     depends_on:
-      - base
+      - python
     command: bash
-    #volumes:
-    #  - "${APPDOCK_HOME}:/home/appdock"
-    networks:
-      - rope
 
   db:
     image: markussitzmann/appdock_db:${APPDOCK_BUILD_LABEL}
@@ -89,12 +80,8 @@ services:
       context: https://github.com/markussitzmann/docker-postgresql.git#appdock
       args:
         build_label: ${APPDOCK_BUILD_LABEL}
-    #volumes:
-    #   - /srv/docker/appdockdb:/var/lib/postgresql
     depends_on:
        - base
-    networks:
-       - rope
 
 networks:
   rope:
