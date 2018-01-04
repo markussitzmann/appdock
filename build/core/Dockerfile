@@ -4,6 +4,7 @@ MAINTAINER markussitzmann@gmail.com
 
 RUN apt-get -y --no-install-recommends install \
     build-essential \
+    postgresql-client \
     libglib2.0-0 \
     libxext6 \
     libsm6 \

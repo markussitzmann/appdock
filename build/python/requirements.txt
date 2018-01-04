@@ -1,5 +1,4 @@
 Pillow
-NumPy
 uwsgi
 markdown
 psycopg2

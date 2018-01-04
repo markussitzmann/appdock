@@ -9,34 +9,19 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
 
 ENV PATH /opt/conda/bin:$PATH
 
-#RUN conda update conda --yes && \
-#    conda config --add channels rdkit && \
-RUN conda install jinja2 conda-build --yes && \
-    conda install anaconda-client --yes && \
-    conda install patchelf --yes && \
-    conda install numpy=1.12 --yes && \
-    conda install eigen --yes && \
-    conda install python=3.6.1 --yes
+RUN conda install jinja2 conda-build --yes
+RUN conda install anaconda-client --yes
+RUN conda install patchelf --yes
+RUN conda install numpy=1.12 --yes
+RUN conda install eigen --yes
+RUN conda install python=3.6.1 --yes
 
 # http://bugs.python.org/issue19846
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
 ENV LANG C.UTF-8
 
-# explicitly set user/group IDs
-#RUN groupadd -r appserver --gid=1000 && useradd -r -g appserver --uid=1000 appserver
-
 COPY requirements.txt /
-#COPY docker-entrypoint.sh /
-
-#RUN conda install --use-local --yes --quiet python rdkit
 RUN CONDA_PY=36 pip install -r /requirements.txt
 
-#RUN mkdir -p /opt/appserver && \
-#    chown -R appserver.appserver /opt/appserver && \
-#    chown -R appserver.appserver /opt/conda
-#USER appserver
-
-#ENTRYPOINT ["/docker-entrypoint.sh"]
-#CMD ["/bin/bash"]
 
 

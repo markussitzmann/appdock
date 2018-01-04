@@ -6,9 +6,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     curl wget gosu sudo \
     gnupg \
     unzip tar bzip2 \
-    git \
-    postgresql-client
-
+    git
+    
 COPY docker-entrypoint.sh /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
