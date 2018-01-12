@@ -24,5 +24,6 @@ RUN apt-get -y --no-install-recommends install \
     libxml2-dev \
     libxslt1-dev \
     patch \
-    cmake
+    cmake && \
+    rm -rf /var/lib/apt/lists/*
 

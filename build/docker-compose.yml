@@ -46,7 +46,7 @@ services:
     image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
     container_name: appdock_rdkit
     build:
-      context: rdkit/compile
+      context: rdkit/
       args:
         build_label: ${APPDOCK_BUILD_LABEL}
     depends_on:

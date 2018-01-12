@@ -4,19 +4,13 @@ MAINTAINER markussitzmann@gmail.com
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN CONDA_PY=36 conda create \
-    --verbose --yes --use-local --channel rdkit -n appdock
-    #boost \
-    #nox \
-    #cairocffi \
-    #eigen \
-    #rdkit
+RUN CONDA_PY=36 conda create --verbose --yes  -n appdock
 
 COPY requirements.txt /
 
 RUN /bin/bash -c "source activate appdock" && \
     pip install -r /requirements.txt && \
-    conda install --use-local rdkit
+    conda install --use-local --channel rdkit boost nox cairocffi eigen rdkit
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]

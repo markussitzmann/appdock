@@ -9,19 +9,9 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN CONDA_PY=36 conda install jinja2 conda-build --yes
-RUN CONDA_PY=36 conda install anaconda-client --yes
-#RUN conda install patchelf --yes
-#RUN conda install numpy=1.12 --yes
-#RUN conda install eigen --yes
-#RUN conda install python=3.6.1 --yes
+RUN CONDA_PY=36 conda install jinja2 conda-build --yes && \
+    CONDA_PY=36 conda install anaconda-client --yes
 
-# http://bugs.python.org/issue19846
-# > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
-ENV LANG C.UTF-8
-
-#COPY requirements.txt /
-#RUN CONDA_PY=36 pip install -r /requirements.txt
 
 
 
