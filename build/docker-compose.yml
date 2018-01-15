@@ -42,15 +42,15 @@ services:
     depends_on:
       - core
 
-  rdkit:
-    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_rdkit
-    build:
-      context: rdkit/
-      args:
-        build_label: ${APPDOCK_BUILD_LABEL}
-    depends_on:
-      - python
+#  rdkit:
+#    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
+#    container_name: appdock_rdkit
+#    build:
+#      context: rdkit/
+#      args:
+#        build_label: ${APPDOCK_BUILD_LABEL}
+#    depends_on:
+#      - python
 
   app:
     image: markussitzmann/appdock_app:${APPDOCK_BUILD_LABEL}
@@ -60,7 +60,7 @@ services:
       args:
         build_label: ${APPDOCK_BUILD_LABEL}
     depends_on:
-      - rdkit
+      - python
 
   shell:
     image: markussitzmann/appdock_shell:${APPDOCK_BUILD_LABEL}

@@ -9,8 +9,7 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN CONDA_PY=36 conda install jinja2 conda-build --yes && \
-    CONDA_PY=36 conda install anaconda-client --yes
+RUN CONDA_PY=36 conda install anaconda-client --yes
 
 
 
