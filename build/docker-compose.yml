@@ -22,15 +22,6 @@ services:
 #    networks:
 #      - "rope"
 #
-  core:
-    image: markussitzmann/appdock_core:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_core
-    build:
-      context: core/
-      args:
-        build_label: ${APPDOCK_BUILD_LABEL}
-    depends_on:
-      - base
 
   python:
     image: markussitzmann/appdock_python:${APPDOCK_BUILD_LABEL}
@@ -40,17 +31,17 @@ services:
       args:
         build_label: ${APPDOCK_BUILD_LABEL}
     depends_on:
-      - core
+      - base
 
-#  rdkit:
-#    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
-#    container_name: appdock_rdkit
-#    build:
-#      context: rdkit/
-#      args:
-#        build_label: ${APPDOCK_BUILD_LABEL}
-#    depends_on:
-#      - python
+  rdkit-app:
+    image: markussitzmann/appdock_rdkit_app:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_rdkit_app
+    build:
+      context: rdkit-app/
+      args:
+        build_label: ${APPDOCK_BUILD_LABEL}
+    depends_on:
+      - python
 
   app:
     image: markussitzmann/appdock_app:${APPDOCK_BUILD_LABEL}

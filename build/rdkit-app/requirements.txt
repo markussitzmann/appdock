@@ -1,0 +1,7 @@
+Pillow
+psycopg2
+hashids
+requests
+lxml
+six
+
