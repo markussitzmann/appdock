@@ -12,10 +12,27 @@ services:
 #    networks:
 #      - "rope"
 
+  django-app:
+    image: markussitzmann/django_app:${APPDOCK_BUILD_LABEL}
+    container_name: django-app
+    volumes:
+      - "${APPDOCK_HOME}:/home/appdock"
+      - "${DJANGO_APPS_HOME}:/home/apps"
+    ports:
+       - "80"
+    networks:
+      - rope
+    environment:
+      - APPDOCK_BUILD_LABEL
+      - APPDOCK_HOME
+      - APPDOCK_USER
+      - APPDOCK_UID
+      - APPDOCK_GID
 
-  app:
-    image: markussitzmann/appdock_app:${APPDOCK_BUILD_LABEL}
-    container_name: app
+
+  rdkit-app:
+    image: markussitzmann/appdock_rdkit_app:${APPDOCK_BUILD_LABEL}
+    container_name: rdkit-app
     command: bash
     volumes:
       - "${APPDOCK_HOME}:/home/appdock"

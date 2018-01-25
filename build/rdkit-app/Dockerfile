@@ -1,8 +1,13 @@
 ARG build_label
-FROM markussitzmann/appdock_python:$build_label as rdkit-build
+FROM debian:stretch as rdkit-build
 MAINTAINER markussitzmann@gmail.com
 
-RUN apt-get -y --no-install-recommends install \
+RUN apt-get update && apt-get -y --no-install-recommends install \
+    ca-certificates \
+    curl wget gosu sudo \
+    gnupg \
+    unzip tar bzip2 \
+    git \
     build-essential \
     postgresql-client \
     libglib2.0-0 \
@@ -24,6 +29,15 @@ RUN apt-get -y --no-install-recommends install \
     patch \
     cmake \
     && rm -rf /var/lib/apt/lists/*
+
+RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.3.30-Linux-x86_64.sh && \
+    /bin/bash /Miniconda3-4.3.30-Linux-x86_64.sh -b -p /opt/conda && \
+    rm Miniconda3-4.3.30-Linux-x86_64.sh
+
+ENV PATH /opt/conda/bin:$PATH
+
+RUN CONDA_PY=36 conda install anaconda-client --yes
 
 RUN mkdir -p /home/rdkit
 WORKDIR /home/rdkit
@@ -69,6 +83,7 @@ COPY requirements.txt /
 
 RUN /bin/bash -c "source activate appdock" && \
     conda install numpy && \
+    conda install -c conda-forge uwsgi && \
     conda install --offline /home/appdock/boost-*.tar.bz2  && \
     conda install --offline /home/appdock/cairo-*.tar.bz2 && \
     conda install --offline /home/appdock/cairocffi-*.tar.bz2 && \
@@ -79,5 +94,5 @@ RUN /bin/bash -c "source activate appdock" && \
     pip install -r /requirements.txt
 
 
-COPY docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+#COPY docker-entrypoint.sh /
+#ENTRYPOINT ["/docker-entrypoint.sh"]

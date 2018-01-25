@@ -1,5 +1,4 @@
 Pillow
-uwsgi
 markdown
 psycopg2
 pygments
@@ -7,8 +6,8 @@ hashids
 requests
 lxml
 six
-django
-djangorestframework
-django-extensions
-django-finalware
+#django
+#djangorestframework
+#django-extensions
+#django-finalware
 

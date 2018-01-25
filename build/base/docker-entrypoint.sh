@@ -1,7 +1,6 @@
 #!/bin/bash
 
 echo "Starting with UID : $APPDOCK_UID : $APPDOCK_GID : $APPDOCK_HOME : $APPDOCK_USER"
-echo "bla"
 if id "$APPDOCK_USER" >/dev/null 2>&1; then
     echo "User exists, skipping creation."
 else
@@ -12,5 +11,6 @@ else
     chown $APPDOCK_UID:$APPDOCK_GID /home/appdock
 fi
 
-cd /home/appdock
-exec gosu $APPDOCK_USER "$@"
+#cd /home/appdock
+#exec gosu $APPDOCK_USER "$@"
+exec "$@"

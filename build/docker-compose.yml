@@ -53,6 +53,16 @@ services:
     depends_on:
       - python
 
+  django-app:
+    image: markussitzmann/django_app:${APPDOCK_BUILD_LABEL}
+    container_name: django_app
+    build:
+      context: django-app/
+      args:
+        build_label: ${APPDOCK_BUILD_LABEL}
+    depends_on:
+      - app
+
   shell:
     image: markussitzmann/appdock_shell:${APPDOCK_BUILD_LABEL}
     container_name: appdock_shell

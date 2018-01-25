@@ -47,7 +47,7 @@ MIDDLEWARE_CLASSES = [
 ]
 
 
-ROOT_URLCONF = 'apps.urls'
+ROOT_URLCONF = 'appsite.urls'
 
 TEMPLATES = [
     {
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'apps.wsgi.application'
+WSGI_APPLICATION = 'appsite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
@@ -78,20 +78,20 @@ WSGI_APPLICATION = 'apps.wsgi.application'
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2', 
-            'NAME': 'appserver',
-            'USER':  'appserver',
-            'PASSWORD': os.environ['POSTGRES_APPSERVERDB_PASSWORD'],
-            'HOST': os.environ['POSTGRES_APPSERVERDB_HOST'],
+            'NAME': 'appdock',
+            'USER':  'appdock',
+            'PASSWORD': 'ARG0',
+            'HOST': "db",
             'PORT': 5432
         },
-    'appserverdb': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2', 
-            'NAME': 'appserver',
-            'USER':  'appserver',
-            'PASSWORD': os.environ['POSTGRES_APPSERVERDB_PASSWORD'],
-            'HOST': os.environ['POSTGRES_APPSERVERDB_HOST'],
-            'PORT': 5432
-        }
+ #   'appserverdb': {
+ #           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+ #           'NAME': 'appserver',
+ #           'USER':  'appserver',
+ #           'PASSWORD': os.environ['POSTGRES_APPSERVERDB_PASSWORD'],
+ #           'HOST': os.environ['POSTGRES_APPSERVERDB_HOST'],
+ #           'PORT': 5432
+ #       }
 }
 #DATABASE_ROUTERS = ['apps.dbrouter.AuthRouter',]
 
@@ -132,9 +132,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join("/home/service", "static/")
+STATIC_ROOT = os.path.join("/home/apps", "static/")
 
-MEDIA_ROOT = os.path.join("/home/service", "media/")
+MEDIA_ROOT = os.path.join("/home/apps", "media/")
 MEDIA_URL = "/media/"
 
 # Add `finalware.context_processors.contextify` to your TEMPLATE_CONTEXT_PROCESSORS
@@ -154,8 +154,8 @@ MEDIA_URL = "/media/"
 
 SITE_OBJECTS_INFO_DICT = {
     '1': {
-        'name': os.environ['DJANGO_HOSTNAME'],
-        'domain': os.environ['DJANGO_HOSTNAME'],
+        'name': 'test',
+        'domain': 'test',
     },
 }
 SITE_ID = 1

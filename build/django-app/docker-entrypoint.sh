@@ -11,5 +11,12 @@ else
     chown $APPDOCK_UID:$APPDOCK_GID /home/appdock
 fi
 
-cd /home/appdock
+#cd /home/appdock
+#exec "$@"
+
+#mkdir /home/apps
+cp -r /opt/project_template/appsite /home/apps
+chown -R $APPDOCK_UID:$APPDOCK_GID /home/apps
+chmod -R 755 /home/apps
+
 exec "$@"

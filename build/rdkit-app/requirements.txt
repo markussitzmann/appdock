@@ -1,7 +1,8 @@
 Pillow
+markdown
 psycopg2
+pygments
 hashids
 requests
 lxml
 six
-
