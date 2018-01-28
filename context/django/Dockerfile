@@ -9,8 +9,12 @@ RUN apt-get -y --no-install-recommends install \
 
 ENV PATH /opt/conda/bin:$PATH
 
-COPY ./nginx /home/nginx
-COPY ./project_template /opt/project_template
+RUN mkdir -p /opt/django-app
+COPY ./nginx /home/nginx/
+COPY ./project_template /opt/django-app/project_template/
+COPY ./scripts /opt/django-app/scripts/
+#COPY ./docker-compose.yml shell uswgi-log /opt/django-app/
+#COPY ./bin /opt/django-app/bin/
 
 RUN chown -R www-data.www-data /home/nginx && \
     echo "daemon off;" >> /etc/nginx/nginx.conf && \

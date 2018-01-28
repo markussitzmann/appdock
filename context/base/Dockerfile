@@ -9,5 +9,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     git
     
 COPY docker-entrypoint.sh /
+COPY ./appdock /opt/appdock
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

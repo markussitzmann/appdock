@@ -8,8 +8,12 @@ else
     groupadd -g $APPDOCK_GID $APPDOCK_USER
     useradd --shell /bin/bash -u $APPDOCK_UID -g $APPDOCK_GID -o -c "" -M $APPDOCK_USER
     export HOME=$APPDOCK_HOME
-    chown $APPDOCK_UID:$APPDOCK_GID /home/appdock
+    #chown $APPDOCK_UID:$APPDOCK_GID /home/appdock
 fi
+
+cp -r /opt/appdock/* /home/appdock
+chown -R $APPDOCK_UID:$APPDOCK_GID /home/appdock
+
 
 #cd /home/appdock
 #exec gosu $APPDOCK_USER "$@"

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd context/
+
+docker-compose build
+
+cd ..

@@ -11,6 +11,13 @@ services:
       - rope
     volumes:
       - "${APPDOCK_HOME}:/home/appdock"
+    environment:
+      - APPDOCK_BUILD_LABEL
+      - APPDOCK_HOME
+      - APPDOCK_USER
+      - APPDOCK_UID
+      - APPDOCK_GID
+
 #
 #  proxy:
 #    image: markussitzmann/appdock_proxy:${APPDOCK_BUILD_LABEL}
@@ -33,15 +40,16 @@ services:
     depends_on:
       - base
 
-  rdkit-app:
-    image: markussitzmann/appdock_rdkit_app:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_rdkit_app
+  rdkit:
+    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_rdkit
     build:
-      context: rdkit-app/
+      context: rdkit/
       args:
         build_label: ${APPDOCK_BUILD_LABEL}
     depends_on:
       - python
+
 
   app:
     image: markussitzmann/appdock_app:${APPDOCK_BUILD_LABEL}
@@ -53,15 +61,17 @@ services:
     depends_on:
       - python
 
-  django-app:
-    image: markussitzmann/django_app:${APPDOCK_BUILD_LABEL}
-    container_name: django_app
+
+  django:
+    image: markussitzmann/appdock_django:${APPDOCK_BUILD_LABEL}
+    container_name: django
     build:
-      context: django-app/
+      context: django/
       args:
         build_label: ${APPDOCK_BUILD_LABEL}
     depends_on:
       - app
+
 
   shell:
     image: markussitzmann/appdock_shell:${APPDOCK_BUILD_LABEL}
@@ -73,6 +83,7 @@ services:
     depends_on:
       - python
     command: bash
+
 
   db:
     image: markussitzmann/appdock_db:${APPDOCK_BUILD_LABEL}

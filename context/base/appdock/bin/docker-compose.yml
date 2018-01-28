@@ -1,0 +1,98 @@
+version: '3'
+
+services:
+
+#  proxy:
+#    image: markussitzmann/appdock_proxy:${APPDOCK_BUILD_LABEL}
+#    container_name: appdock_proxy
+#    build:
+#      context: https://github.com/markussitzmann/nginx-proxy.git#appdock
+#      #args:
+#      #  build_label: ${APPDOCK_BUILD_LABEL}
+#    networks:
+#      - "rope"
+
+  django-app:
+    image: markussitzmann/django_app:${APPDOCK_BUILD_LABEL}
+    container_name: django-app
+    volumes:
+      - "${APPDOCK_HOME}:/home/appdock"
+      - "${DJANGO_APPS_HOME}:/home/apps"
+    ports:
+       - "80"
+    networks:
+      - rope
+    environment:
+      - APPDOCK_BUILD_LABEL
+      - APPDOCK_HOME
+      - APPDOCK_USER
+      - APPDOCK_UID
+      - APPDOCK_GID
+
+
+  rdkit-app:
+    image: markussitzmann/appdock_rdkit_app:${APPDOCK_BUILD_LABEL}
+    container_name: rdkit-app
+    command: bash
+    volumes:
+      - "${APPDOCK_HOME}:/home/appdock"
+    networks:
+      - rope
+    environment:
+      - APPDOCK_BUILD_LABEL
+      - APPDOCK_HOME
+      - APPDOCK_USER
+      - APPDOCK_UID
+      - APPDOCK_GID
+
+
+  shell:
+    image: markussitzmann/appdock_shell:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_shell
+    command: bash
+    volumes:
+      - "${APPDOCK_HOME}:/home/appdock"
+    networks:
+      - rope
+    environment:
+      - APPDOCK_BUILD_LABEL
+      - APPDOCK_HOME
+      - APPDOCK_USER
+      - APPDOCK_UID
+      - APPDOCK_GID
+
+  db:
+    image: markussitzmann/appdock_db:${APPDOCK_BUILD_LABEL}
+    container_name: appdock_db
+    build:
+      context: https://github.com/markussitzmann/docker-postgresql.git#appdock
+    volumes:
+       - /srv/docker/appdockdb:/var/lib/postgresql
+    networks:
+      - rope
+    environment:
+      - DEBUG=false
+
+      - APPDOCK_BUILD_LABEL
+      - APPDOCK_HOME
+      - APPDOCK_USER
+      - APPDOCK_UID
+      - APPDOCK_GID
+
+      - DB_USER=${APPDOCK_USER}
+      - DB_PASS=${APPDOCK_DB_PASSWORD}
+      - DB_NAME=${APPDOCK_USER}
+      - DB_TEMPLATE=
+
+      - DB_EXTENSION=rdkit
+
+      - REPLICATION_MODE=
+      - REPLICATION_USER=
+      - REPLICATION_PASS=
+      - REPLICATION_SSLMODE=
+
+networks:
+  rope:
+
+
+

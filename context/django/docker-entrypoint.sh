@@ -15,7 +15,10 @@ fi
 #exec "$@"
 
 #mkdir /home/apps
-cp -r /opt/project_template/appsite /home/apps
+cp -r /opt/django-app/project_template/appsite /home/apps
+cp -r /opt/django-app/scripts/* /home/apps
+cp /opt/django-app/* /home/apps
+mv /home/apps/env .env
 chown -R $APPDOCK_UID:$APPDOCK_GID /home/apps
 chmod -R 755 /home/apps
 
