@@ -92,7 +92,3 @@ RUN /bin/bash -c "source activate appdock" && \
     conda install --offline /home/appdock/rdkit-*.tar.bz2 && \
     conda clean -pt && \
     pip install -r /requirements.txt
-
-
-#COPY docker-entrypoint.sh /
-#ENTRYPOINT ["/docker-entrypoint.sh"]

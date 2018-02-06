@@ -2,6 +2,10 @@
 
 cd context/
 
-docker-compose up base
+docker-compose run --rm base
 
-cd ..
+cd django/
+
+docker-compose run --rm django
+
+cd ../..

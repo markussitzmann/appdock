@@ -5,7 +5,7 @@ MAINTAINER markussitzmann@gmail.com
 ENV PATH /opt/conda/bin:$PATH
 
 RUN apt-get -y --no-install-recommends install \
-    build-essential \
+#    build-essential \
     postgresql-client
 
 RUN CONDA_PY=36 conda create --verbose --yes  -n appdock
@@ -17,6 +17,3 @@ RUN /bin/bash -c "source activate appdock" && \
     conda install -c conda-forge uwsgi && \
     pip install -r /requirements.txt
 
-
-#COPY docker-entrypoint.sh /
-#ENTRYPOINT ["/docker-entrypoint.sh"]

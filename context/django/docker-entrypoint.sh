@@ -11,15 +11,16 @@ else
     chown $APPDOCK_UID:$APPDOCK_GID /home/appdock
 fi
 
-#cd /home/appdock
-#exec "$@"
-
-#mkdir /home/apps
-cp -r /opt/django-app/project_template/appsite /home/apps
-cp -r /opt/django-app/scripts/* /home/apps
-cp /opt/django-app/* /home/apps
-mv /home/apps/env .env
-chown -R $APPDOCK_UID:$APPDOCK_GID /home/apps
-chmod -R 755 /home/apps
+if [ -z "$(ls -A /home/apps)" ]; then
+    cp -rf /opt/django/project_template/appsite /home/apps
+    cp -rf /opt/django/scripts/* /home/apps
+    cp /opt/django/* /home/apps
+    cp /env /home/apps/.env
+    cp /docker-compose.yml /home/apps
+    chown -R $APPDOCK_UID:$APPDOCK_GID /home/apps
+    chmod -R 755 /home/apps
+else
+    echo "Django home directory isn't empty; skipping initializing content there"
+fi
 
 exec "$@"

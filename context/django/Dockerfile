@@ -9,25 +9,26 @@ RUN apt-get -y --no-install-recommends install \
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN mkdir -p /opt/django-app
-COPY ./nginx /home/nginx/
-COPY ./project_template /opt/django-app/project_template/
-COPY ./scripts /opt/django-app/scripts/
-#COPY ./docker-compose.yml shell uswgi-log /opt/django-app/
-#COPY ./bin /opt/django-app/bin/
 
-RUN chown -R www-data.www-data /home/nginx && \
-    echo "daemon off;" >> /etc/nginx/nginx.conf && \
-    rm /etc/nginx/sites-enabled/default && \
-    ln -s /home/nginx/nginx.conf /etc/nginx/sites-enabled/ && \
-    ln -s /home/nginx/supervisord.conf /etc/supervisor/conf.d/
+
+RUN mkdir -p /opt/django
+COPY ./nginx /home/nginx/
+COPY ./project_template /opt/django/project_template/
+COPY ./scripts /opt/django/scripts/
+COPY ./docker-compose.yml /
+COPY ./.env /env
+COPY docker-entrypoint.sh /
 
 COPY requirements.txt /
 
 RUN /bin/bash -c "source activate appdock" && \
     pip install -r /requirements.txt
 
-COPY docker-entrypoint.sh /
+RUN chown -R www-data.www-data /home/nginx && \
+    echo "daemon off;" >> /etc/nginx/nginx.conf && \
+    rm /etc/nginx/sites-enabled/default && \
+    ln -s /home/nginx/nginx.conf /etc/nginx/sites-enabled/ && \
+    ln -s /home/nginx/supervisord.conf /etc/supervisor/conf.d/
 
 EXPOSE 80
 CMD ["/home/nginx/run.sh"]
