@@ -1,19 +1,33 @@
 ARG build_label
-FROM markussitzmann/appdock_python:$build_label
+FROM markussitzmann/appdock_django:$build_label
 MAINTAINER markussitzmann@gmail.com
 
-ENV PATH /opt/conda/bin:$PATH
+RUN apt-get update && apt-get -y --no-install-recommends install \
+    nginx \
+    supervisor \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get -y --no-install-recommends install \
-#    build-essential \
-    postgresql-client
+#ENV PATH /opt/conda/bin:$PATH
 
-RUN CONDA_PY=36 conda create --verbose --yes  -n appdock
 
-COPY requirements.txt /
+#RUN mkdir -p /opt/django
+COPY ./nginx /home/nginx/
+#COPY ./project_template /opt/django/project_template/
+#COPY ./scripts /opt/django/scripts/
+#COPY ./docker-compose.yml /
+#COPY ./.env /env
+#COPY docker-entrypoint.sh /
 
-RUN /bin/bash -c "source activate appdock" && \
-    conda install numpy && \
-    conda install -c conda-forge uwsgi && \
-    pip install -r /requirements.txt
+#COPY requirements.txt /
 
+#RUN /bin/bash -c "source activate appdock" && \
+#    pip install -r /requirements.txt
+
+RUN chown -R www-data.www-data /home/nginx && \
+    echo "daemon off;" >> /etc/nginx/nginx.conf && \
+    rm /etc/nginx/sites-enabled/default && \
+    ln -s /home/nginx/nginx.conf /etc/nginx/sites-enabled/ && \
+    ln -s /home/nginx/supervisord.conf /etc/supervisor/conf.d/
+
+EXPOSE 80
+CMD ["/home/nginx/run.sh"]

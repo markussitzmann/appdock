@@ -12,38 +12,38 @@ services:
 #    networks:
 #      - "rope"
 
-  django:
-    image: markussitzmann/appdock_django:${APPDOCK_BUILD_LABEL}
-    container_name: django
-    volumes:
-      - "${APPDOCK_HOME}:/home/appdock"
-      - "${DJANGO_APPS_HOME}:/home/apps"
-    ports:
-       - "80"
-    networks:
-      - rope
-    environment:
-      - APPDOCK_BUILD_LABEL
-      - APPDOCK_HOME
-      - APPDOCK_USER
-      - APPDOCK_UID
-      - APPDOCK_GID
+#  django:
+#    image: markussitzmann/appdock_django:${APPDOCK_BUILD_LABEL}
+#    container_name: django
+#    volumes:
+#      - "${APPDOCK_HOME}:/home/appdock"
+#      - "${DJANGO_APPS_HOME}:/home/apps"
+#    ports:
+#       - "80"
+#    networks:
+#      - rope
+#    environment:
+#      - APPDOCK_BUILD_LABEL
+#      - APPDOCK_HOME
+#      - APPDOCK_USER
+#      - APPDOCK_UID
+#      - APPDOCK_GID
 
 
-  rdkit:
-    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
-    container_name: rdkit
-    command: bash
-    volumes:
-      - "${APPDOCK_HOME}:/home/appdock"
-    networks:
-      - rope
-    environment:
-      - APPDOCK_BUILD_LABEL
-      - APPDOCK_HOME
-      - APPDOCK_USER
-      - APPDOCK_UID
-      - APPDOCK_GID
+#  rdkit:
+#    image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
+#    container_name: rdkit
+#    command: bash
+#    volumes:
+#      - "${APPDOCK_HOME}:/home/appdock"
+#    networks:
+#      - rope
+#    environment:
+#      - APPDOCK_BUILD_LABEL
+#      - APPDOCK_HOME
+#      - APPDOCK_USER
+#      - APPDOCK_UID
+#      - APPDOCK_GID
 
 
   shell:

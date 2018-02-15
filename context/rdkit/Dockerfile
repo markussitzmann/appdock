@@ -75,20 +75,20 @@ RUN apt-get -y --no-install-recommends install \
     libfreetype6 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN CONDA_PY=36 conda create --verbose --yes  -n appdock
+#RUN CONDA_PY=36 conda create --verbose --yes  -n appdock
 
 COPY --from=rdkit-build /opt/conda/conda-bld/linux-64/*.tar.bz2 /home/appdock/
 
-COPY requirements.txt /
+#COPY requirements.txt /
 
 RUN /bin/bash -c "source activate appdock" && \
-    conda install numpy && \
-    conda install -c conda-forge uwsgi && \
+#    conda install numpy && \
+#    conda install -c conda-forge uwsgi && \
     conda install --offline /home/appdock/boost-*.tar.bz2  && \
     conda install --offline /home/appdock/cairo-*.tar.bz2 && \
     conda install --offline /home/appdock/cairocffi-*.tar.bz2 && \
     conda install --offline /home/appdock/eigen-*.tar.bz2  && \
     conda install --offline /home/appdock/nox-*.tar.bz2  && \
     conda install --offline /home/appdock/rdkit-*.tar.bz2 && \
-    conda clean -pt && \
-    pip install -r /requirements.txt
+    conda clean -pt
+#    pip install -r /requirements.txt

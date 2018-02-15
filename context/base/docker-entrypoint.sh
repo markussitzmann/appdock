@@ -11,12 +11,14 @@ else
     echo "Done."
 fi
 
-if find "/home/appdock" -mindepth 1 -print -quit | grep -q .; then
-    echo "Appdock home directory isn't empty, skipping initializing content there"
-else
+if [ -z "$(ls -A /home/appdock)" ];  then
+    echo "Initializing home directory for appdock ..."
     cp /opt/appdock/bin/* /home/appdock
     cp /opt/appdock/bin/.env /home/appdock
     chown -R $APPDOCK_UID:$APPDOCK_GID /home/appdock
+    echo "Done."
+else
+    echo "Appdock home directory isn't empty, skipping initializing content there"
 fi
 
 

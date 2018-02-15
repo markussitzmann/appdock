@@ -9,8 +9,14 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN CONDA_PY=36 conda install anaconda-client --yes
+COPY requirements.txt /
 
+RUN CONDA_PY=36 conda install anaconda-client --yes && \
+    CONDA_PY=36 conda create --verbose --yes -n appdock
 
+RUN /bin/bash -c "source activate appdock" && \
+    conda install numpy && \
+#    conda install -c conda-forge uwsgi && \
+    pip install -r /requirements.txt
 
 

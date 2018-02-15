@@ -18,7 +18,7 @@ Clone this repository::
 
     https://github.com/markussitzmann/appdock.git appdock
 
-go into directory (::
+go into directory ::
 
     cd appdock/
 

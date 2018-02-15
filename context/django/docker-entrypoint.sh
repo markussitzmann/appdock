@@ -12,13 +12,12 @@ else
 fi
 
 if [ -z "$(ls -A /home/apps)" ]; then
-    cp -rf /opt/django/project_template/appsite /home/apps
-    cp -rf /opt/django/scripts/* /home/apps
-    cp /opt/django/* /home/apps
-    cp /env /home/apps/.env
-    cp /docker-compose.yml /home/apps
+    echo "Initializing home directory for django ..."
+    cp -rf /opt/django/* /home/apps
+    mv /home/apps/env /home/apps/.env
+    rm /home/apps/docker-entrypoint.sh
     chown -R $APPDOCK_UID:$APPDOCK_GID /home/apps
-    chmod -R 755 /home/apps
+    echo "Done."
 else
     echo "Django home directory isn't empty; skipping initializing content there"
 fi
