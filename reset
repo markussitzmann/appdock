@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source .env
+
+docker-compose -f $APPDOCK_HOME/docker-compose.yml down
+docker-compose -f $APP_HOME/docker-compose.yml down
+
+rm -rf $APPDOCK_HOME && rm -rf $APP_HOME

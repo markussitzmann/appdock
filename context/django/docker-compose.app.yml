@@ -2,6 +2,24 @@ version: '3'
 
 services:
 
+  app:
+    image: markussitzmann/appdock_app:${APPDOCK_BUILD_LABEL}
+    container_name: app
+    volumes:
+      - "${APPDOCK_HOME}:/home/appdock"
+      - "${APP_HOME}:/home/app"
+    ports:
+       - "8000:80"
+    networks:
+      - rope
+    environment:
+      - APPDOCK_HOME
+      - APPDOCK_USER
+      - APPDOCK_UID
+      - APPDOCK_GID
+      - APP_HOME
+      - VIRTUAL_HOST=whoami.local
+
   proxy:
     image: markussitzmann/appdock_proxy:${APPDOCK_BUILD_LABEL}
     container_name: appdock_proxy
@@ -12,22 +30,6 @@ services:
       - "80:80"
     networks:
       - rope
-
-  shell:
-    image: markussitzmann/appdock_shell:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_shell
-    command: bash
-    volumes:
-      - "${APPDOCK_HOME}:/home/appdock"
-    networks:
-      - rope
-    environment:
-      - APPDOCK_BUILD_LABEL
-      - APPDOCK_ROOT
-      - APPDOCK_HOME
-      - APPDOCK_USER
-      - APPDOCK_UID
-      - APPDOCK_GID
 
   db:
     image: markussitzmann/appdock_db:${APPDOCK_BUILD_LABEL}
@@ -55,8 +57,7 @@ services:
       - REPLICATION_USER=
       - REPLICATION_PASS=
       - REPLICATION_SSLMODE=
-
-  networks:
+    networks:
       - rope
 
 networks:

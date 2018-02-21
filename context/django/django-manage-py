@@ -1,8 +1,10 @@
 #!/bin/bash
-source ./service.env
 
 echo "Running $@"
 
-docker-compose run django-app bash -ci "\
-	cd cd /home/apps/appsite &&\
-	./manage.py $*"
+docker-compose exec app bash -ci "gosu appdock bash -c 'cd /home/app/ && manage.py $*'"
+
+
+#docker-compose run --rm app bash -ci "\
+#	cd /home/apps/ &&\
+#	./manage.py $*"

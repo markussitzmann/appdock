@@ -1,8 +1,9 @@
 #!/bin/bash
 
-docker push markussitzmann/appserver_shell:1
-docker push markussitzmann/appserver_postgres:1
-docker push markussitzmann/appserver_proxy:1
-docker push markussitzmann/appserver_django:1
-docker push markussitzmann/appserver_rdkit:1
-docker push markussitzmann/appserver_elasticsearch:1
+source ../.env
+
+docker push markussitzmann/appdock_shell:$APPDOCK_BUILD_LABEL
+docker push markussitzmann/appdock_db:$APPDOCK_BUILD_LABEL
+docker push markussitzmann/appdock_django:$APPDOCK_BUILD_LABEL
+docker push markussitzmann/appdock_app:$APPDOCK_BUILD_LABEL
+

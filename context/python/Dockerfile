@@ -16,7 +16,7 @@ RUN CONDA_PY=36 conda install anaconda-client --yes && \
 
 RUN /bin/bash -c "source activate appdock" && \
     conda install numpy && \
-#    conda install -c conda-forge uwsgi && \
+    conda install -c conda-forge uwsgi && \
     pip install -r /requirements.txt
 
 

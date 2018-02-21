@@ -1,5 +1,8 @@
 #!/bin/bash
 
-cp .env ./context && cp .env ./context/django && cp .env ./context/base/appdock/bin/
+cp .env ./context \
+&& cp .env ./context/django/ \
+&& cp .env ./context/base/appdock/bin/ \
+&& cp .env ./context/app/
 
-cd context/ && docker-compose build && cd ..
+docker-compose -f ./context/docker-compose.yml build

@@ -30,7 +30,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
+    #'rest_framework',
     # last application to finalize things
     'finalware',
 )
@@ -41,7 +41,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -63,7 +62,6 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.core.context_processors.request',
                 'finalware.context_processors.contextify',
             ],
         },
@@ -132,9 +130,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join("/home/apps", "static/")
+STATIC_ROOT = os.path.join("/home/app", "static/")
 
-MEDIA_ROOT = os.path.join("/home/apps", "media/")
+MEDIA_ROOT = os.path.join("/home/app", "media/")
 MEDIA_URL = "/media/"
 
 # Add `finalware.context_processors.contextify` to your TEMPLATE_CONTEXT_PROCESSORS
