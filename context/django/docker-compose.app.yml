@@ -9,18 +9,23 @@ services:
       - "${APPDOCK_HOME}:/home/appdock"
       - "${APP_HOME}:/home/app"
     ports:
-       - "8000:80"
+       - "${APP_CONNECTION_PORT}:80"
     networks:
       - rope
     environment:
-      - APPDOCK_HOME
-      - APPDOCK_USER
-      - APPDOCK_UID
-      - APPDOCK_GID
-      - APP_HOME
-      - VIRTUAL_HOST
+      - APPDOCK_HOME=${APPDOCK_HOME}
+      - APPDOCK_USER=${APPDOCK_USER}
+      - APPDOCK_UID=${APPDOCK_UID}
+      - APPDOCK_GID=${APPDOCK_GID}
+      - APPDOCK_DB_HOST=${APPDOCK_DB_HOST}
+      - APPDOCK_DB_PORT=${APPDOCK_DB_PORT}
+      - APPDOCK_DB_PASSWORD=${APPDOCK_DB_PASSWORD}
+      - APP_HOME=${APP_HOME}
+      - APP_VIRTUAL_HOSTNAME=${APP_VIRTUAL_HOSTNAME}
+      - VIRTUAL_HOST=${APP_VIRTUAL_HOSTNAME}
     depends_on:
       - proxy
+      - db
 
   proxy:
     image: markussitzmann/appdock_proxy:${APPDOCK_BUILD_LABEL}
@@ -29,7 +34,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - "${APPDOCK_HOME}:/home/appdock"
     ports:
-      - "80:80"
+      - "${PROXY_EXTERNAL_PORT}:80"
     networks:
       - rope
 
@@ -37,33 +42,9 @@ services:
     image: markussitzmann/appdock_db:${APPDOCK_BUILD_LABEL}
     container_name: appdock_db
     volumes:
-       - /srv/docker/appdockdb:/var/lib/postgresql
-    environment:
-      - DEBUG=false
-
-      - APPDOCK_BUILD_LABEL
-      - APPDOCK_ROOT
-      - APPDOCK_HOME
-      - APPDOCK_USER
-      - APPDOCK_UID
-      - APPDOCK_GID
-
-      - DB_USER=${APPDOCK_USER}
-      - DB_PASS=${APPDOCK_DB_PASSWORD}
-      - DB_NAME=${APPDOCK_USER}
-      - DB_TEMPLATE=
-
-      - DB_EXTENSION=rdkit
-
-      - REPLICATION_MODE=
-      - REPLICATION_USER=
-      - REPLICATION_PASS=
-      - REPLICATION_SSLMODE=
+      - /srv/docker/appdockdb:/var/lib/postgresql
     networks:
       - rope
 
 networks:
   rope:
-
-
-
