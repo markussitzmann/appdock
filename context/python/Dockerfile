@@ -1,6 +1,6 @@
 ARG build_label
 FROM markussitzmann/appdock_base:$build_label
-MAINTAINER markussitzmann@gmail.com
+LABEL maintainer="markussitzmann@gmail.com "
 
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.3.30-Linux-x86_64.sh && \

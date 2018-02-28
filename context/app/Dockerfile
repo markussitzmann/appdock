@@ -1,6 +1,6 @@
 ARG build_label
 FROM markussitzmann/appdock_django:$build_label
-MAINTAINER markussitzmann@gmail.com
+LABEL maintainer="markussitzmann@gmail.com "
 
 ENV PATH /opt/conda/bin:$PATH
 

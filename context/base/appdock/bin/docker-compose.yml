@@ -33,31 +33,30 @@ services:
     image: markussitzmann/appdock_db:${APPDOCK_BUILD_LABEL}
     container_name: appdock_db
     volumes:
-       - /srv/docker/appdockdb:/var/lib/postgresql
+       #- /srv/docker/appdockdb:/var/lib/postgresql
+      - db_volume:/var/lib/postgresql
+    networks:
+      - rope
     environment:
-      - DEBUG=false
-
+      - DEBUG=true
       - APPDOCK_BUILD_LABEL
       - APPDOCK_ROOT
       - APPDOCK_HOME
       - APPDOCK_USER
       - APPDOCK_UID
       - APPDOCK_GID
-
       - DB_USER=${APPDOCK_USER}
       - DB_PASS=${APPDOCK_DB_PASSWORD}
       - DB_NAME=${APPDOCK_USER}
       - DB_TEMPLATE=
-
       - DB_EXTENSION=rdkit
-
       - REPLICATION_MODE=
       - REPLICATION_USER=
       - REPLICATION_PASS=
       - REPLICATION_SSLMODE=
 
-  networks:
-      - rope
+volumes:
+  db_volume:
 
 networks:
   rope:
