@@ -1,7 +1,7 @@
 AppDock - a Docker based platform for Python/Django based scientific web applications and microservices
 =======================================================================================================
 
-.. sectionauthor:: Matt Swain <m.swain@me.com>
+.. sectionauthor:: Markus Sitzmann <markus.sitzmann@gmail.com>
 
 **AppDock** is in a very early development stage. This is some initial documentation. APPDOCK allows for the creation of a series of
 Docker images which can be brought up as a set of Docker containers, or Docker Compose services, respectively. They are roped together
