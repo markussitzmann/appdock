@@ -1,6 +1,6 @@
 Pillow
 markdown
-psycopg2
+psycopg2-binary
 pygments
 hashids
 requests
