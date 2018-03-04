@@ -8,8 +8,6 @@ Because of its cheminformatic centric focus it includes RDKit in all relevant co
 
 .. image:: docs/_images/appdock.svg
 
-.. image:: docs/_images/appdock.png
-
 
 in a very early development stage. This is some initial documentation. APPDOCK allows for the creation of a series of
 Docker images which can be brought up as a set of Docker containers, or Docker Compose services, respectively. They are roped together
