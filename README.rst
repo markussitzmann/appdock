@@ -6,7 +6,7 @@ AppDock
 Because of its cheminformatic centric focus it includes RDKit in all relevant components
 
 
-.. image:: appdock.svg
+.. image:: appdock.png
    :target: docs/_images/appdock.png
 
 
