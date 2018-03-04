@@ -7,7 +7,7 @@ Because of its cheminformatic centric focus it includes RDKit in all relevant co
 
 
 .. image:: appdock.svg
-   :target: docs/_images/appdock.svg
+   :target: docs/_images/appdock.png
 
 
 
