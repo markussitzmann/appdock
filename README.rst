@@ -1,17 +1,20 @@
 AppDock
 =======
 
-**AppDock** is a Docker based platform for scientific web applications and microservices. At its current
-(early) development stage it specifically supports the quick development python/Django based services.
-Because of its cheminformatic centric focus it includes RDKit in all relevant components
+Overview
+--------
+
+**AppDock** is a `Docker <https://docs.docker.com/>`_ based platform intended for the rapid development of scientific
+web applications and microservices. At its current (early) development stage it specifically supports the quick
+development of `python <https://www.python.org/>`_/`Django <https://www.djangoproject.com/>`_ based services.
+Because its development was started with a cheminformatic-centric focus in mind, AppDock includes
+`RDKit <http://www.rdkit.org/>`_ both at its core application container for the development of the
+python/Django-based components, as well as database extension of the `Postgres <https://www.postgresql.org/>`_
+database container. The following schema provides an overview.
 
 
-.. image:: docs/_images/appdock.svg
+.. image:: docs/_images/appdock.png
 
-
-in a very early development stage. This is some initial documentation. APPDOCK allows for the creation of a series of
-Docker images which can be brought up as a set of Docker containers, or Docker Compose services, respectively. They are roped together
-in a virtual Docker network and provide a basic infrastructure for Python/Django-based applications.
 
 Requirements
 ------------
@@ -19,8 +22,8 @@ Requirements
 Please have at least `Docker CE 17.09 <https://docs.docker.com/engine/installation/>`_ and `Docker Compose 1.17 <https://docs.docker.com/compose/install/>`_ installed on your system.
 
 
-Installation
-------------
+Installation (Outdated)
+-----------------------
 
 Clone this repository::
 

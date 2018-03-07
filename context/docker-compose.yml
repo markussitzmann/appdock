@@ -4,7 +4,7 @@ services:
 
   base:
     image: markussitzmann/appdock_base:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_base
+    #container_name: appdock_base
     build:
       context: base/
     volumes:
@@ -18,13 +18,13 @@ services:
 
   proxy:
     image: markussitzmann/appdock_proxy:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_proxy
+    #container_name: appdock_proxy
     build:
       context: https://github.com/markussitzmann/nginx-proxy.git#appdock
 
   python:
     image: markussitzmann/appdock_python:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_python
+    #container_name: appdock_python
     build:
       context: python/
       args:
@@ -34,7 +34,7 @@ services:
 
   rdkit:
     image: markussitzmann/appdock_rdkit:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_rdkit
+    #container_name: appdock_rdkit
     build:
       context: rdkit/
       args:
@@ -44,7 +44,7 @@ services:
 
   django:
     image: markussitzmann/appdock_django:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_django
+    #container_name: appdock_django
     build:
       context: django/
       args:
@@ -54,7 +54,7 @@ services:
 
   shell:
     image: markussitzmann/appdock_shell:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_shell
+    #container_name: appdock_shell
     build:
       context: shell/
       args:
@@ -65,7 +65,7 @@ services:
 
   db:
     image: markussitzmann/appdock_db:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_db
+    #container_name: appdock_db
     build:
       context: https://github.com/markussitzmann/docker-postgresql.git#appdock
       args:
@@ -75,7 +75,7 @@ services:
 
   app:
     image: markussitzmann/appdock_app:${APPDOCK_BUILD_LABEL}
-    container_name: appdock_app
+    #container_name: appdock_app
     build:
       context: app/
       args:
