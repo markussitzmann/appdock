@@ -35,7 +35,7 @@ Requirements
 Please have at least `Docker CE 17.09 <https://docs.docker.com/engine/installation/>`_ and `Docker Compose 1.17 <https://docs.docker.com/compose/install/>`_ installed on your system.
 
 
-Installation (Outdated)
+Installation (needs update)
 -----------------------
 
 Clone this repository::
