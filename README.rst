@@ -5,15 +5,28 @@ Overview
 --------
 
 **AppDock** is a `Docker <https://docs.docker.com/>`_ based platform intended for the rapid development of scientific
-web applications and microservices. At its current (early) development stage it specifically supports the quick
-development of `python <https://www.python.org/>`_/`Django <https://www.djangoproject.com/>`_ based services.
-Because its development was started with a cheminformatic-centric focus in mind, AppDock includes
-`RDKit <http://www.rdkit.org/>`_ both at its core application container for the development of the
-python/Django-based components, as well as database extension of the `Postgres <https://www.postgresql.org/>`_
-database container. The following schema provides an overview.
+web applications and microservices. It has been develop as component for the `InChI-Resolver <http://www.inchi-resolver.org/>`_
+project (the alpha version of) the resolver is currently in the process of being migrated from a predecessor version of AppDock)
+At its current (early) development stage, AppDock supports the quick deployment of `Python <https://www.python.org/>`_/`Django <https://www.djangoproject.com/>`_
+based services and specifically includes `RDKit <http://www.rdkit.org/>`_ for building `chemoinformatics <https://en.wikipedia.org/wiki/Cheminformatics>`_-centric
+applications. The following schema gives an overview.
 
 
 .. image:: docs/_images/appdock.png
+
+
+If launched, Appdock creates a Docker virtual network ("AppDock Rope") on the Docker host system and starts up several
+Docker containers which connect to this network. Currently, this includes a Postgres database container with RDKit
+extension readily available, a Nginx container which is configured as reverse proxy, and a basic application (App) container
+which provides a Django installation extended by the `Django REST framework <https://www.django-rest-framework.org/>`_ and RDKit on
+Python-level. The Django installation is set up to to establishes a connection to the database instance at the Postgres container
+and to link to the local Nginx web server instance inside the same App container (by uswgi). If the Nginx instance of
+the Proxy container senses another container with Nginx running inside the AppDock Rope network, it automatically
+looks up the (sub) domain specification of this additional Nginx instance and makes it available to the outside of
+AppDock (which either might be localhost or any Web-accessible domain). This mechanism allows to easily bring up
+additional App containers or update or remove existing ones.
+
+
 
 
 Requirements
