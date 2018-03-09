@@ -32,6 +32,7 @@ images required for starting up AppDock are either available from `Docker hub <h
 host machine using Docker build.
 
 Current release version of the most important packages are:
+
 * Python 3.6.3
 * Django 2.0 + Django Rest Framework 3.7.7
 * Postgres 9.6
