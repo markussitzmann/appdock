@@ -21,12 +21,21 @@ extension readily available, a Nginx container which is configured as reverse pr
 which provides a Django installation extended by the `Django REST framework <https://www.django-rest-framework.org/>`_ and RDKit on
 Python-level. The Django installation is set up to to establishes a connection to the database instance at the Postgres container
 and to link to the local Nginx web server instance inside the same App container (by uswgi). If the Nginx instance of
-the Proxy container senses another container with Nginx running inside the AppDock Rope network, it automatically
+the Proxy container discovers another container with Nginx running inside the AppDock Rope network, it automatically
 looks up the (sub) domain specification of this additional Nginx instance and makes it available to the outside of
 AppDock (which either might be localhost or any Web-accessible domain). This mechanism allows to easily bring up
 additional App containers or update or remove existing ones.
 
+Build and deployment of AppDock are orchestrated by `docker-compose <https://docs.docker.com/compose/>`_. Any Docker
+images required for starting up AppDock are either available from `Docker hub <https://docs.docker.com/docker-hub/>`_
+(either as official package releases, third-party images or images pre-build by me), or can be build locally on the user's
+host machine using Docker build.
 
+Current release version of the most important packages are:
+* Python 3.6.3
+* Django 2.0 + Django Rest Framework 3.7.7
+* Postgres 9.6
+* RDKit 2017.09.3
 
 
 Requirements
